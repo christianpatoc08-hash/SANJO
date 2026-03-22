@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background: #378BF9;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.login-box{
+background:#eee;
+width:350px;
+padding:40px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+h2{
+text-align:center;
+margin-bottom:25px;
+}
+
+label{
+display:block;
+margin-bottom:5px;
+font-size:14px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-bottom:15px;
+border:1px solid #aaa;
+border-radius:5px;
+box-sizing:border-box;
+}
+
+.button{
+display:block;
+text-align:center;
+width:94%;
+padding:12px;
+background:#e16b6b;
+color:white;
+font-size:16px;
+border-radius:25px;
+text-decoration:none;
+}
+
+
+.button:hover{
+background:#d44;
+}
+
+.forgot{
+text-align:right;
+font-size:13px;
+margin-top:10px;
+}
+
+.forgot a{
+text-decoration:none;
+color:#333;
+}
+
+.forgot a:hover{
+text-decoration:underline;
+text-align: center;
+}
+.navbar {
+    background: rgba(55, 139, 249, 1);
+    height: auto;
+    padding:5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    position:fixed;
+    width: 100%;
+    top:0px;
+    z-index: 500;
+}
+
+.navbar img {
+    width: 10%;
+    height: 50px;
+}
+.navbar .links{
+    display: inline-block;
+    position:absolute;
+    right: 0%;
+}
+.navbar .links a{
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    margin-right: 40px;
+    font-family: 'Poppins', sans-serif;
+}
+
+</style>
+
+</head>
+
+<body>
+    <nav class="navbar">
+            <img src="LOGO.png">
+            <div class="links">
+                <a href="index.html">Home</a> 
+                <a href="menu.html">Product</a>
+                <a href="Contact.html">Contact</a>
+                <a href="">About</a>
+                
+            </div>
+    </nav> 
+
+<div class="login-box">
+
+<h2>Login</h2>
+
+<form>
+
+<label>Username</label>
+<input type="text" placeholder="Enter email">
+
+<label>Password</label>
+<input type="password" placeholder="Enter password">
+
+<a href="menu.html" class="button">Login</a>
+
+
+<div class="forgot">
+<a href="#">Forgot your password?</a>
+</div>
+
+</form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { 
+        font-family: 'Segoe UI', sans-serif; 
+        background-color: rgba(55, 139, 249, 1); 
+        padding: 40px;
+        }
+        .container {
+        max-width: 500px; 
+        margin: auto; 
+        position: relative; 
+        } 
+        .order-item {
+            background: white;
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .qty-badge {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background: #2f3542;
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 13px;
+            font-weight: bold;
+            border: 2px solid white;
+            z-index: 2;
+        }
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .qty-btn {
+            background: #e2e8f0;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .qty-btn:hover {
+            background: #cbd5e1; 
+        }
+        .remove-link {
+            background: none;
+            border: none;
+            color: #ff4757;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: underline;
+            padding: 0;
+            margin-top: 5px;
+        }
+        .total-box {
+            text-align: right;
+            padding: 20px;
+            font-size: 1.2rem;
+            border-top: 2px dashed #ccc;
+            margin-top: 20px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: #00ff6a;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(46, 213, 115, 0.2);
+        }
+        #success-overlay {
+            display: none;
+            position: fixed;
+            top: 20vh;
+            left: 50vh;
+            width: 50%;
+            height:50vh;
+            background: rgba(255,255,255,0.95);
+            z-index: 10;
+            text-align: center;
+            padding-top: 50px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="success-overlay">
+        <h1 style="color: #2ed573;">✔ Order Submitted</h1>
+        <p>Kitchen is firing up your meal!</p>
+        <button onclick="window.location.href='menu.html'" style="padding: 10px 20px; cursor: pointer;">New Order</button>
+    </div>
+
+    <h1>Checkout</h1>
+    <div id="order-list"></div>
+    
+    <div id="total-container" class="total-box">
+        Total: <strong id="total-price"></strong>
+    </div>
+
+    <button id="main-submit" class="submit-btn" onclick="submitOrder()">Confirm & Pay</button>
+    <a href="menu.html" style="display: block; text-align: center; margin-top: 20px; color: #2f3542;">Add more items</a>
+</div>
+
+<script>
+    function displayOrders() {
+        const listContainer = document.getElementById('order-list');
+        const totalPriceEl = document.getElementById('total-price');
+        const submitBtn = document.getElementById('main-submit');
+        const orders = JSON.parse(localStorage.getItem('myOrders')) || [];
+
+        if (orders.length === 0) {
+            listContainer.innerHTML = '<p style="text-align:center; color:#a4b0be;">Empty Tray</p>';
+            totalPriceEl.innerText = "$0";
+            submitBtn.style.display = 'none';
+            return;
+        }
+
+        submitBtn.style.display = 'block';
+        let grandTotal = 0;
+
+        listContainer.innerHTML = orders.map((item, index) => {
+            const itemTotal = item.price * item.qty;
+            grandTotal += itemTotal;
+
+            return `
+                <div class="order-item">
+                    <span class="qty-badge">${item.qty}</span>
+                    <div>
+                        <strong>${item.name}</strong>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                    <div style="text-align: right">
+                        <div style="font-weight: bold;">$${itemTotal}</div>
+                        <button class="remove-link" onclick="deleteItem(${index})">Remove all</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        totalPriceEl.innerText = `$${grandTotal}`;
+    }
+    function changeQty(index, amount) {
+        let orders = JSON.parse(localStorage.getItem('myOrders')) || [];
+        orders[index].qty += amount;
+
+        if (orders[index].qty <= 0) {
+            orders.splice(index, 1);
+        }
+        localStorage.setItem('myOrders', JSON.stringify(orders));
+        displayOrders();
+    }
+    function deleteItem(index) {
+        let orders = JSON.parse(localStorage.getItem('myOrders')) || [];
+        orders.splice(index, 1);
+        localStorage.setItem('myOrders', JSON.stringify(orders));
+        displayOrders();
+    }
+    function submitOrder() {
+        document.getElementById('success-overlay').style.display = 'block';
+        localStorage.removeItem('myOrders');
+    }
+    displayOrders();
+</script>
+
+</body>
+</html>
