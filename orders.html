@@ -156,14 +156,14 @@
                         </div>
                     </div>
                     <div style="text-align: right">
-                        <div style="font-weight: bold;">$${itemTotal}</div>
+                        <div style="font-weight: bold;">₱${itemTotal}</div>
                         <button class="remove-link" onclick="deleteItem(${index})">Remove all</button>
                     </div>
                 </div>
             `;
         }).join('');
 
-        totalPriceEl.innerText = `$${grandTotal}`;
+        totalPriceEl.innerText = `₱${grandTotal}`;
     }
     function changeQty(index, amount) {
         let orders = JSON.parse(localStorage.getItem('myOrders')) || [];
