@@ -118,7 +118,7 @@ svg{
 .Login:hover {
     background-color: white;
     color: #378BF9; 
-    transform: translateY(-2px); /* Slight lift effect */
+    transform: translateY(-2px); 
 }
 
 .signUp {
